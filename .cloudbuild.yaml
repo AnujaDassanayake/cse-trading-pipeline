@@ -13,3 +13,6 @@ steps:
           --source cse_gcp_scraper
 
 timeout: 600s
+
+options:
+  logging: CLOUD_LOGGING_ONLY
