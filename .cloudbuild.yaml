@@ -1,12 +1,15 @@
 steps:
-  - name: 'gcr.io/cloud-builders/gcloud'
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
     args:
-      - functions
-      - deploy
-      - scrape_cse_and_upload
-      - --runtime=python311
-      - --trigger-http
-      - --allow-unauthenticated
-      - --set-env-vars=BUCKET_NAME=cse-trading-pipeline-bucket
-      - --entry-point=scrape_cse_and_upload
-      - --source=cse_gcp_scraper
+      - '-c'
+      - |
+        gcloud functions deploy scrape_cse_and_upload \
+          --runtime python311 \
+          --trigger-http \
+          --allow-unauthenticated \
+          --set-env-vars BUCKET_NAME=cse-trading-pipeline-bucket \
+          --entry-point scrape_cse_and_upload \
+          --source cse_gcp_scraper
+
+timeout: 600s
